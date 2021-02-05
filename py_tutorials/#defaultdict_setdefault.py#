@@ -15,3 +15,4 @@ visits.add('Russia', 'Bryansk')
 visits.add('Germany', 'Berlin')
 visits.add('France', 'Paris')
 print(visits.data['Russia'])
+
