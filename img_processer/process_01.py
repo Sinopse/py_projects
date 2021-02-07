@@ -3,8 +3,9 @@ from generate_path import generate_images
 from object_02 import container
 import os
 
-save_path = r"C:\Users\aleks\Desktop\Python Tutorials\Images_Anna"
+#save_path = r"C:\Users\aleks\Desktop\Python Tutorials\Images_Anna"
 data_path = r"C:\Users\aleks\Desktop\Python\img_processer\test_images"
+save_path = r"C:\Users\aleks\Desktop\Python\img_processer\processed_images"
 #data_path = r"D:\08_02_21_Puma_Gyroid_V7"
 
 regions_dict = dict()  # generic dict creation? class?
@@ -27,7 +28,8 @@ class ImageProcessor:
             path = os.path.join(data_path, str(name))
             save = os.path.join(save_path, str(name))
             print(path)
-            layer = Image.open(path, formats=["PNG"]).convert("RGB")
+            #layer = Image.open(path, formats=["PNG"]).convert("RGB")
+            layer = Image.open(path, formats=["PNG"])
 
             print(layer.getbands())
             print(layer.format, layer.size, layer.mode)
@@ -56,9 +58,9 @@ class ImageProcessor:
             for pixel_y in range(row):
                 # customize treshold value
                 #print(px[pixel_x, pixel_y])
-                if px[pixel_x, pixel_y] < (150, 150, 150):
+                 if px[pixel_x, pixel_y]  == 1:
                     # print(px[pixel_x, pixel_y])
-                    px[pixel_x, pixel_y] = grayscale
+                    px[pixel_x, pixel_y] = 4
         return crop_region
 
 

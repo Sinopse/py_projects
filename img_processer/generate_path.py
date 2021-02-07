@@ -29,7 +29,6 @@ data_path = r"C:\Users\aleks\Desktop\Python\img_processer\test_images"
 #data_path = r"D:\08_02_21_Puma_Gyroid_V7"
 generate_images = DataInput(data_path).generate_inputs()
 
-for _ in generate_images:
-    print(_)
-
+#for _ in generate_images:
+#    print(_)
 
