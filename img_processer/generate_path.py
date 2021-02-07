@@ -1,32 +1,35 @@
 import os
+from PIL import Image
 
-data_path = os.path.dirname(os.path.realpath(__file__))
-# print(data_path)
-
-
+# DataInput stores target and destination folders
 class DataInput:
     def __init__(self, path):
         self.path = path
 
-# probably should filter out non-image formats (search for file extension)
-# or let user specify which formats to skip
+    def generate_inputs(self):
+        name_list = []
+        for name in os.listdir(self.path):
+            try:
+                img = Image.open(name, formats=["JPEG", "PNG"])
+                img.close()
 
-    @classmethod
-    def generate_inputs(cls, path):
-        for name in os.listdir():
-            yield cls(name)
+            except OSError:
+                pass
 
-# a string representaion of a path
-    def __repr__(self):
-        return f'"{self.path}"'
+            name_list.append(name)
+        return name_list
+
+    # # a string representaion of a path
+    # def __repr__(self):
+    #     return f'"{self.name}"'
 
 
-def generate_path_names(input_class, path):
-    path = input_class.generate_inputs(path)
-    return path
-    # for i in path:
-    #     print(f'"{i}"')
+#data_path = os.path.dirname(os.path.realpath(__file__))
+data_path = r"C:\Users\aleks\Desktop\Python\img_processer\test_images"
+#data_path = r"D:\08_02_21_Puma_Gyroid_V7"
+generate_images = DataInput(data_path).generate_inputs()
 
-res = generate_path_names(DataInput, data_path)
-# for i in res:
-#     print(list(i))
+for _ in generate_images:
+    print(_)
+
+

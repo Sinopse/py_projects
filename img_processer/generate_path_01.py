@@ -5,6 +5,6 @@ data_path = os.path.dirname(os.path.realpath(__file__))
 
 def generate_inputs():
     for name in os.listdir():
-        yield f'"{name}"'
+        yield f'{name}'
 
 res = generate_inputs()
