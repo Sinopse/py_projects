@@ -1,34 +1,35 @@
 import os
 from PIL import Image
+from process_05 import ImageProcessor
+
+formats = "JPEG", "PNG"
 
 # DataInput stores target and destination folders
-class DataInput:
-    def __init__(self, path):
-        self.path = path
+class DataInput(ImageProcessor):
+    def __init__(self, target=None, destination=None, *formats, **config):
+        self.target = target
+        self.destination = destination
+        self._formats = formats  # not optimal solution
+        self._config = config
+        self._file_list = []
 
     def generate_inputs(self):
-        name_list = []
-        for name in os.listdir(self.path):
+        for file in os.listdir(self.target):
+            # check if images and can be opened
+            # if true append to the list
+            # just use the format selector to find the files
+            # with the right extensions
             try:
-                img = Image.open(name, formats=["JPEG", "PNG"])
+                img = Image.open(file, formats=formats)
                 img.close()
-
             except OSError:
                 pass
-
-            name_list.append(name)
-        return name_list
-
-    # # a string representaion of a path
-    # def __repr__(self):
-    #     return f'"{self.name}"'
+            else:
+                self._file_list.append(file)
+        return self._file_list
 
 
 #data_path = os.path.dirname(os.path.realpath(__file__))
-data_path = r"C:\Users\aleks\Desktop\Python\img_processer\test_images"
-#data_path = r"D:\08_02_21_Puma_Gyroid_V7"
-generate_images = DataInput(data_path).generate_inputs()
 
-#for _ in generate_images:
-#    print(_)
+#formats = "JPEG", "PNG"
 

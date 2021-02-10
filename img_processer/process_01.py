@@ -1,12 +1,5 @@
 from PIL import Image
-from generate_path import generate_images
-from object_02 import container
 import os
-
-#save_path = r"C:\Users\aleks\Desktop\Python Tutorials\Images_Anna"
-data_path = r"C:\Users\aleks\Desktop\Python\img_processer\test_images"
-save_path = r"C:\Users\aleks\Desktop\Python\img_processer\processed_images"
-#data_path = r"D:\08_02_21_Puma_Gyroid_V7"
 
 regions_dict = dict()  # generic dict creation? class?
 box_crop1 = [(0, 0, 2700, 1140), (55, 55, 55)]  # what to do with odd values?
@@ -18,29 +11,33 @@ regions_dict['region2'] = box_crop2
 regions_dict['region3'] = box_crop3
 regions_dict['region4'] = box_crop4
 
-# for a number of configs
-# generate an image
-# process that image
-#Mix-in class for DataInput
 class ImageProcessor:
-    def process(self, img_input, config):
-        for name in img_input:
-            path = os.path.join(data_path, str(name))
-            save = os.path.join(save_path, str(name))
-            print(path)
-            #layer = Image.open(path, formats=["PNG"]).convert("RGB")
-            layer = Image.open(path, formats=["PNG"])
+    def load_image(self, target, destination, input_class, config):
+        count = 0
+        for count, name in enumerate(input_class):
+#            print(name)
+            # specify target and destination
+            path = os.path.join(target, str(name))
+           # print(path)
+            save_path = os.path.join(destination, str(name))
+            self._process_image(path, save_path, config)
+        return f'Processed {count} images'
 
-            print(layer.getbands())
-            print(layer.format, layer.size, layer.mode)
+    def _process_image(self, target, destination, config):
+        layer = Image.open(target, formats=["PNG"]).convert("RGB")
+        #layer = Image.open(target)
+        # print image info
+        print(layer.getbands())
+        print(layer.format, layer.size, layer.mode)
 
-            for key, values in config.items():
-                layer = self._crop_image(layer, values)
+        # loop to process a given layer/image
+        for key, values in config.items():
+            self._crop_image(layer, values)
 
-            # layer_converted = layer.convert("P")
-            # print(layer_converted.getbands())
-            layer.save(save, "PNG")
-            yield layer
+        # layer_converted = layer.convert("P")
+        # print(layer_converted.getbands())
+        layer.save(destination, "PNG")
+        yield layer
 
     def _crop_image(self, image, values):
         rectangle, grayscale = values[0], values[1]
@@ -49,22 +46,14 @@ class ImageProcessor:
         image.paste(region, rectangle)
         return image
 
-
     def _process_pixels(self, crop_region, grayscale):
         px = crop_region.load()
         print(crop_region.size)
         column, row = crop_region.size  # unpacked values
         for pixel_x in range(column):
             for pixel_y in range(row):
-                # customize treshold value
                 #print(px[pixel_x, pixel_y])
-                 if px[pixel_x, pixel_y]  == 1:
-                    # print(px[pixel_x, pixel_y])
-                    px[pixel_x, pixel_y] = 4
+                 if px[pixel_x, pixel_y] < (150, 150, 150):
+                    px[pixel_x, pixel_y] = grayscale
         return crop_region
 
-
-processor = ImageProcessor().process(generate_images, regions_dict)
-
-for img in processor:
-    print("processed")
