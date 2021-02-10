@@ -17,15 +17,12 @@ class DataInput(ImageProcessor):
         for file in os.listdir(self.target):
             # check if images and can be opened
             # if true append to the list
-            # just use the format selector to find the files
-            # with the right extensions
             try:
-                img = Image.open(file, formats=formats)
+                img = Image.open(file, formats=self._formats)
                 img.close()
             except OSError:
                 pass
-            else:
-                self._file_list.append(file)
+            self._file_list.append(file)
         return self._file_list
 
 
