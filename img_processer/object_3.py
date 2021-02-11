@@ -15,14 +15,15 @@ class ConfigData:
         self._regions = defaultdict(list)
 
     def add_params(self, region, subrectangle, grayscale):
-        #if isinstance(subrectangle, tuple) and len(subrectangle) == 4:
+        try:
             self._regions[region].append(subrectangle)
             self._regions[region].append(_GRAYSCALE[grayscale])
-        #else:
-         #   raise TypeError("Inappropriate container types - supply a tuple")
+        except KeyError as e:
+            print(f'* Suppplied key "{grayscale}"  is not valid; try different format')
+            raise ValueError(grayscale) from e
 
 # config = ConfigData()
-# config.add_params("region1", (0, 0, 2700, 1140), "gray2")
+# config.add_params("region1", (0, 0, 2700), "gray2")
 # config.add_params("region2", (0, 0, 2700, 1140), "gray3")
 #
 # print(config.__dict__)

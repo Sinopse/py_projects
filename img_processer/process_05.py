@@ -25,21 +25,22 @@ class ImageProcessor:
             save_path = instance_dict["destination"]
             config = instance_dict["_config"]
             img_input = instance_dict["_file_list"]
+            formats = instance_dict["_formats"]
         except KeyError:
-            print("Key was not found")
+            raise ValueError("Key was not found - check your instance arguments")
         else:
-            return self._process_images(data_path, save_path, img_input, config)
+            return self._process_images(data_path, save_path, img_input, config, formats)
 
-    def _process_images(self, data_path, save_path, img_input, config):
+    def _process_images(self, data_path, save_path, img_input, config, formats):
         count = 0
         # also can make here a recursive feucntion instead of yield
         # if not end of the list -> process further -> think about it
         for count, name in enumerate(img_input, 1):
             path = os.path.join(data_path, str(name))
             save = os.path.join(save_path, str(name))
-            layer = Image.open(path, formats=["PNG"]).convert("RGB")
+            layer = Image.open(path, formats=formats).convert("RGB")
 
-            print(layer.getbands())
+            # print(layer.getbands())
             print(layer.size, layer.mode)
 
             for key, values in config.items():
