@@ -54,15 +54,12 @@ class ImageProcessor:
 
         return count
 
-
-
     def _crop_image(self, image, values):
         rectangle, grayscale = values[0], values[1]
         region = image.crop(rectangle)
         region = self._process_pixels(region, grayscale)
         image.paste(region, rectangle)
         return image
-
 
     def _process_pixels(self, crop_region, grayscale):
         px = crop_region.load()
@@ -72,7 +69,7 @@ class ImageProcessor:
             for pixel_y in range(row):
                 # customize treshold value
                 #print(px[pixel_x, pixel_y])
-                if px[pixel_x, pixel_y] < (150, 150, 150):
+                if px[pixel_x, pixel_y] < (150, 150, 150): # make this value changeable by user
                     # print(px[pixel_x, pixel_y])
                     px[pixel_x, pixel_y] = grayscale
         return crop_region

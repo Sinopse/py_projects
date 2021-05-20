@@ -4,3 +4,7 @@ venv/*.*
 *.jpg
 *.png
 *.pyc
+*.*~
+*.exe
+*.txt
+*.png
