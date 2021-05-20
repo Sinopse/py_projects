@@ -29,16 +29,21 @@ void fillRow(unsigned *** arr, size_t col, size_t row) {
 void freeArr(unsigned *** arr, size_t col, size_t row) {
    for (int i = 0; i < col; i++) {
      for (int j = 0; j < row; j++) {
-       free(arr[col][row]);
+       free(arr[i][j]);
        }
-     free(arr[col]);
+     free(arr[i]);
      }
    free(arr);
 }
 
-int main() {
-  int col = 5;
-  int row = 5;
+int main(int argc, char ** argv) {
+  if (argc < 3) {
+    fprintf(stderr, "Usage: col row");
+    return EXIT_FAILURE;
+  }
+
+  size_t col = atoi(argv[1]);
+  size_t row = atoi(argv[2]);
 
   unsigned *** colarr = malloc(col * sizeof(*colarr));
   
