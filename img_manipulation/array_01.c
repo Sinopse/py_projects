@@ -47,6 +47,9 @@ void print(unsigned *** arr, size_t col, size_t row) {
 void freeArr(unsigned *** arr, size_t col, size_t row) {
    for (int i = 0; i < col; i++) {
      for (int j = 0; j < row; j++) {
+       //  for (int k = 0; k < 3; k++) {
+       //free(arr[col][row][k]);
+       //}
        free(arr[col][row]);
        }
      free(arr[col]);

@@ -1,3 +1,5 @@
 *.c~
 *.exe
 *.txt
+*.dSYM/
+*.o
