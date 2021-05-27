@@ -43,7 +43,7 @@ void print(unsigned *** arr, size_t col, size_t row) {
      printf("\n");
    }
 }
-
+x
 void freeArr(unsigned *** arr, size_t col, size_t row) {
    for (int i = 0; i < col; i++) {
      for (int j = 0; j < row; j++) {

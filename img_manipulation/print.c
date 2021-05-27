@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#define PXL 3
 
 void fillCol(unsigned *** arr, size_t col, size_t row) {
   unsigned ** rowarr = NULL;
@@ -11,14 +12,13 @@ void fillCol(unsigned *** arr, size_t col, size_t row) {
 }
 
 void fillRow(unsigned *** arr, size_t col, size_t row) {
-  unsigned pxl = 3;
   unsigned * pxlarr = NULL;
   for (int k = 0; k < col; k++) {
     for (int i = 0; i < row; i++) {
-      pxlarr = realloc(pxlarr, pxl * sizeof(*pxlarr));
+      pxlarr = realloc(pxlarr, PXL * sizeof(*pxlarr));
       // pass in 0 values to pxlarr
-      for (int j = 0; j < pxl; j++) {
-	pxlarr[j] = 0;
+      for (int j = 0; j < PXL; j++) {
+	pxlarr[j] = 0; // this is where the value is assigned
       }
       arr[k][i] = pxlarr;
       pxlarr = NULL;
@@ -57,7 +57,7 @@ void print(unsigned *** arr, size_t col, size_t row) {
   for (int i = 0; i < col; i++) {
       printf("[");
      for (j = 0; j < row; j++) {
-       for (int k = 0; k < 3; k++) {
+       for (int k = 0; k < PXL; k++) {
 	 printf("%d ", arr[i][j][k]);
        }
        printf("]");
