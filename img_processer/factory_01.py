@@ -33,6 +33,8 @@ def test():
     # calling data constructor
     data = ConfigData()
     regions = int(input('* Please, specify how many regions to process:\n'))
+    # here comes the image prompt
+    #exec('draw_rect_1.py')
     if regions > 0:
         for i in range(regions):
             try:

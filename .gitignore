@@ -8,3 +8,4 @@ venv/*.*
 *.exe
 *.txt
 *.png
+test/
