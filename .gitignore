@@ -8,3 +8,7 @@ venv/*.*
 *.exe
 *.txt
 *.png
+test/
+tk_tutorial/
+pygame_tutorial/
+py_tutorials/
