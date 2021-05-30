@@ -8,7 +8,11 @@ venv/*.*
 *.exe
 *.txt
 *.png
+<<<<<<< HEAD
 test/
 tk_tutorial/
 pygame_tutorial/
 py_tutorials/
+=======
+test/
+>>>>>>> b9436aa08511e06c28ad5630639cf4d94cf9dbbf
