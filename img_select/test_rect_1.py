@@ -60,4 +60,6 @@ def run(image):
     return points
 
 
-run(img)
+result = run(img)
+print(result)
+

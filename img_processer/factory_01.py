@@ -11,9 +11,13 @@ from generate_path import DataInput
 from object_3 import ConfigData
 from pathlib import Path
 import time
+import draw_rect
 
 #FORMATS = ("JPEG", "PNG")
 formats = "JPEG", "PNG"
+# if user closes img window before selecting regions
+if draw_rect.trigger:
+    exit()
 
 # a simple interface to interact with user
 def test():
@@ -32,31 +36,37 @@ def test():
 
     # calling data constructor
     data = ConfigData()
-    regions = int(input('* Please, specify how many regions to process:\n'))
+    #regions = int(input('* Please, specify how many regions to process:\n')) # old version
+    regions = len(draw_rect.points)
+    rect = draw_rect.points # convert to tuple?
     # here comes the image prompt
-    #exec('draw_rect_1.py')
-    if regions > 0:
+    if 0 < regions:
         for i in range(regions):
             try:
-                print(f'* Enter parameters for \"region{i + 1}\":')
-                # introduce a while loop to control the input
-                rect = input('* Enter rectangle area:\n')
-                if ',' in rect:
-                    rect = [int(x) for x in rect.split(', ')]
-                else:
-                    rect = [int(x) for x in rect.split(' ')]
+                # print(f'* Enter parameters for \"region{i + 1}\":')
+                # # introduce a while loop to control the input
+                # rect = input('* Enter rectangle area:\n')
+                # if ',' in rect:
+                #     rect = [int(x) for x in rect.split(', ')]
+                # else:
+                #     rect = [int(x) for x in rect.split(' ')]
 
-                # check the length of the passed in array
+                # check the length of the passed in array / tuple
                 if len(rect) != 4:
                     return test()
-                print('* Enter grayscale value:')
+                print(f'* Enter grayscale value for region{i + 1}:')
                 print('* Hint: e.g. gray4')
                 grayscale = input()
-                data.add_params(f"region{i + 1}", rect, grayscale)
+                while "gray" not in grayscale:
+                    print("* Incorrect grayscale entered")
+                    grayscale = input()
+                print(f'* Data for region {i + 1}: {rect[i]}, {grayscale}')
+                data.add_params(f"region{i + 1}", rect[i], grayscale)
             # handle other exceptions that might occur
             except:
                 return test()
     # display the data input by user
+    print(" * These are the regions: ")
     for k, v in data._regions.items():
         print(k, v)
 
@@ -70,8 +80,6 @@ def test():
             print('* The program will now exit')
             time.sleep(3)
             exit()
-
-    # implement try / except / finally
 
     try:
         data_input = DataInput(target=target, destination=destination, formats=formats, **data._regions)
