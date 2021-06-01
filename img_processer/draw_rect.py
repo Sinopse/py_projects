@@ -1,18 +1,26 @@
 import cv2 as cv
 import os
+from pathlib import Path
 from PIL import Image
 import info
 
 info.print_info()
 # selecting first image from the folder
+
+target = Path(input('* Please, specify target folder:\n'))
+while not target.exists():
+    print('* The specified directory doesn\'t exist, try again:')
+    target = Path(input("Please, specify target folder:\n"))
+
 lst = []
-def first_image():
+def first_image(path):
     first_img = ''
 
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    for count, file in enumerate(os.listdir(dir_path), 1):
-        first_img = os.path.join(dir_path, str(file))
+    #dir_path = os.path.dirname(os.path.realpath(__file__))
+    for count, file in enumerate(os.listdir(path), 1):
+        first_img = os.path.join(path, str(file))
         try:
+            # looking for the first image in folder
             image = Image.open(first_img)
             image.close()
             lst.append(first_img)
@@ -54,8 +62,9 @@ def draw(pts):
         x, y = pts
         cv.circle(img, (x, y), 10, (0, 0, 255), -1)
 
+
 # window name and path to the first image in the folder
-image_to_read, window_name = first_image()
+image_to_read, window_name = first_image(target)
 img = cv.imread(image_to_read[0])
 
 cv.namedWindow(window_name, cv.WINDOW_NORMAL)

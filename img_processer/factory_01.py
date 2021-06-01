@@ -22,10 +22,11 @@ if draw_rect.trigger:
 # a simple interface to interact with user
 def test():
     # check if the specified paths are viable
-    target = Path(input('* Please, specify target folder:\n'))
-    while not target.exists():
-        print('* The specified directory doesn\'t exist, try again:')
-        target = Path(input("Please, specify target folder:\n"))
+    target = draw_rect.target  # from draw_direct
+    # target = Path(input('* Please, specify target folder:\n'))
+    # while not target.exists():
+    #     print('* The specified directory doesn\'t exist, try again:')
+    #     target = Path(input("Please, specify target folder:\n"))
 
     destination = Path(input('* Please, specify destination folder:\n'))
     while not destination.exists():
@@ -58,7 +59,7 @@ def test():
                 print('* Hint: e.g. gray4')
                 grayscale = input()
                 while "gray" not in grayscale:
-                    print("* Incorrect grayscale entered")
+                    print("* Incorrect grayscale entered. Try again: ")
                     grayscale = input()
                 print(f'* Data for region {i + 1}: {rect[i]}, {grayscale}')
                 data.add_params(f"region{i + 1}", rect[i], grayscale)
